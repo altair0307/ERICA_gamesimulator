@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.util.Random;
+
 class Player{
 	protected double Roamingstat;
 	protected double Csstat;
