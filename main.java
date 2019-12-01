@@ -17,6 +17,26 @@ class ingame extends Player{
 	public double getItemstat() {
 		return Itemstat;
 	}
+
+	public void setItemstat(double csstat) {
+		Random random = new Random();
+		Itemstat = csstat / 5 + random.nextInt(2) - random.nextInt(2);
+	}
+
+	public int getChoose() {
+		return choose;
+	}
+
+	public boolean winlose(ingame other){
+		Random random = new Random();
+		boolean bo;
+		double wl =0.5 + (this.getSkillstat() + this.getItemstat() -other.getSkillstat() - other.getItemstat());
+		if (wl > random.nextFloat()){
+			bo = true;
+		}
+		else bo = false;
+		return bo;
+	}
 }
 
 class Player{
