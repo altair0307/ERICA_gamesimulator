@@ -5,22 +5,43 @@ from PyQt5 import uic
 from PyQt5.QtGui import *
 import pandas as pd
 import matplotlib.pyplot as plt
+
+df = pd.read_excel("score.xlsx")
+dx = df[['x']]
+dy = df[['y']]
 form_class = uic.loadUiType("main.ui")[0]
-#화면을 띄우는데 사용되는 Class 선언
-class WindowClass(QMainWindow, form_class) :
+class MyDialog(QDialog) :
     def __init__(self) :
-        super().__init__()
-        self.setupUi(self)
+        QDialog.__init__(self)
 
-if __name__ == "__main__" :
-    #QApplication : 프로그램을 실행시켜주는 클래스
-    app = QApplication(sys.argv)
 
-    #WindowClass의 인스턴스 생성
-    myWindow = WindowClass()
+        btx = QPushButton("x axis")
+        bty = QPushButton("y axis")
+        btt = QPushButton("Total")
 
-    #프로그램 화면을 보여주는 코드
-    myWindow.show()
+        layout = QVBoxLayout()
+        layout.addWidget(btx)
+        layout.addWidget(bty)
+        layout.addWidget(btt)
+        self.setLayout(layout)
+        btx.clicked.connect(self.btnXClicked)
+        bty.clicked.connect(self.btnYClicked)
+        btt.clicked.connect(self.btnTClicked)
+    def btnXClicked(self):
+        plt.plot(dx)
+        plt.show()
 
-    #프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
-    app.exec_()
+    def btnYClicked(self):
+        plt.plot(dy)
+        plt.show()
+
+    def btnTClicked(self):
+        plt.plot(df)
+        plt.show()
+
+
+
+app = QApplication([])
+dialog = MyDialog()
+dialog.show()
+app.exec_()
